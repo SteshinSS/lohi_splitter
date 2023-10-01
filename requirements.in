@@ -1,0 +1,18 @@
+# Tools
+black==23.3.0
+flake8==5.0.4
+twine
+
+
+# Data Science
+scikit-learn
+numpy
+pandas
+matplotlib
+ipython
+jupyter
+deepchem
+matplotlib_venn
+
+# Chemistry
+rdkit-pypi
