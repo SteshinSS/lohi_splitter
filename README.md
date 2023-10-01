@@ -21,6 +21,9 @@ This scenario imitates goal-directed optimization tasks in generative models, wh
 ## Installation
 
 ### Pip
+```
+pip install lohi_splitter
+```
 
 ### From Source
 
