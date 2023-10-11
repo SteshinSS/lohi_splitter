@@ -1,12 +1,21 @@
 # Lo-Hi Splitter
 
 ## Description
-There are two distinct tasks in drug discovery: Lead optimization (Lo) and Hit identification (Hi). The Lo-Hi Splitter enables users to partition molecular datasets based on these tasks and helps choose the most appropriate models. There is a paper related to this repository: @TODO
+There are two distinct tasks in drug discovery: Lead optimization (Lo) and Hit identification (Hi). The Lo-Hi Splitter enables users to partition molecular datasets based on these tasks and helps choose the most appropriate models. There is a NeurIPS2023 Dataset and Benchmarks paper related to this repository: https://arxiv.org/abs/2310.06399
 
 ### Hit Identification
 The objective of the Hit Identification task is to discover new molecules with a desired property that are distinct from molecules with known activity. The Hi splitter divides the dataset into training and test sets such that no molecule in the test set resembles any molecule in the training set based on ECFP4 Tanimoto similarity. In some instances, an exact split might not be achievable, resulting in the discarding of certain molecules. To reduce the number of discarded molecules, the Hi splitter employs the minimal vertex k-cut method.
 
 ![Hit Identification](tutorial/hi.png)
+
+This split predicts experimental outcomes better for the Hi-scenario, and might lead to improved performance. See Appendix F of the paper:
+
+| Dataset                  | Validation | Test  |
+|--------------------------|------------|-------|
+| DRD2-Hi (Hi Split)       | 0.603      | **0.677** |
+| DRD2-Hi (Scaffold Split) | 0.872      | 0.663 |
+| HIV-Hi (Hi Split)        | 0.069      | **0.084** |
+| HIV-Hi (Scaffold Split)  | 0.189      | 0.078 |
 
 ### Lead Optimization
 
@@ -39,10 +48,10 @@ Here are some quick tutorials to help you get started. To run the notebooks loca
 pip install -r requirements.in
 ```
 
-1) `00_hi_split_quick.ipynb` - A brief introduction to the Hi split.
-2) `01_hi_split_coarsening.ipynb` - How to accelerate the Hi splitter.
-3) `02_lo_split.ipynb` - A brief introduction to the Lo split.
-4) `03_hi_under_the_hood.ipynb` - Delving into the details of the Hi splitter implementation.
+1) `00_hi_split_quick.ipynb` - A brief introduction to the Hi split. ([colab](https://colab.research.google.com/drive/10N8QoOXRe2eIFzjNozcgZJh5X4FPu7ql?usp=sharing))
+2) `01_hi_split_coarsening.ipynb` - How to accelerate the Hi splitter. ([colab](https://colab.research.google.com/drive/1kUqMT24m7XLa8HZ_E6vHA8Vs54DgiZKW?usp=sharing))
+3) `02_lo_split.ipynb` - A brief introduction to the Lo split. ([colab](https://colab.research.google.com/drive/1C2Ji5ipjKxp8AXR7EgHdOosyqDiZSLTL?usp=sharing))
+4) `03_hi_under_the_hood.ipynb` - Delving into the details of the Hi splitter implementation. ([colab](https://colab.research.google.com/drive/1Aaik_UyW7VyjYs-kXHM4Fbmom-Bu-ctt?usp=sharing))
 
 
 ## Usage
@@ -215,3 +224,12 @@ python -m build
 pip install dist/lohi_splitter-1.0-py3-none-any.whl 
 pip install -r requirements.in 
 ```
+
+### Contribution
+You can contribute in several ways:
+
+1) Unit Tests: The library is compact and will not expand significantly. Thus, select the simplest framework possible.
+2) General Interface: The concept behind Hi Splitter can be applied to various object types, such as amino acid sequences or images. It might be beneficial to have a general interface that works with neighborhood graphs. However, this requires expertise and an understanding of other fields. If you have ideas on how Hi Splitter can be applied to your non-molecular data, please open an issue to discuss it.
+
+## Citation
+Soon
