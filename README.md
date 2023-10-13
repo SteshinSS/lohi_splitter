@@ -1,4 +1,6 @@
 # Lo-Hi Splitter
+[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
+[![pip](https://img.shields.io/pypi/v/lohi-splitter)](https://pypi.org/project/lohi-splitter/)
 
 ## Description
 There are two distinct tasks in drug discovery: Lead optimization (Lo) and Hit identification (Hi). The Lo-Hi Splitter enables users to partition molecular datasets based on these tasks and helps choose the most appropriate models. There is a NeurIPS2023 Dataset and Benchmarks paper related to this repository: https://arxiv.org/abs/2310.06399
@@ -28,22 +30,26 @@ This scenario imitates goal-directed optimization tasks in generative models, wh
 ![Lead Optimization](tutorial/lo.png)
 
 ## Installation
-
-### Pip
+You need python >= 3.7.
+### From pip
 ```
 pip install lohi_splitter
 ```
+Done.
+
 
 ### From Source
-
 ```
+git clone git@github.com:SteshinSS/lohi_splitter.git
+cd lohi_splitter
 python -m pip install --upgrade pip build
 python -m build
 pip install dist/lohi_splitter-1.0-py3-none-any.whl 
 ```
+Done.
 
 ## Tutorial
-Here are some quick tutorials to help you get started. To run the notebooks located in tutorial/, install the required packages:
+Here are some quick tutorials to help you get started. To run the notebooks located in `tutorial/`, install additional packages:
 ```
 pip install -r requirements.in
 ```
@@ -210,6 +216,9 @@ Your selection will depend on the desired generality of your model. Many prefer 
 **How should I determine the std_threshold for the Lo splitter?**
 
 The threshold choice is contingent on the noise level in your data. For ChEMBL-like data, consider using 0.70 for pIC50 and 0.60 for pKi. For high-quality in-house datasets, a threshold of 0.20 for pIC50 might suffice. For a comprehensive answer, refer to the associated paper, specifically Appendix B titled "Lo dataset is not just noise."
+
+**I have M1 MacBook Pro**
+Congratulations! However, the library might not function as expected. We utilize the MIP python library, which in turn relies on the CBC library to solve linear problems. If you encounter an error like `NameError: name 'cbclib' is not defined`, then try [this](https://github.com/coin-or/python-mip/issues/199). The author does not have a Mac, so he cannot test the solution. If you need access to the MIP, refer to Tutorial #4, which demonstrates how the Lo-Hi splitter uses the MIP library behind the scenes.
 
 ## Development
 
