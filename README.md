@@ -241,4 +241,11 @@ You can contribute in several ways:
 2) General Interface: The concept behind Hi Splitter can be applied to various object types, such as amino acid sequences or images. It might be beneficial to have a general interface that works with neighborhood graphs. However, this requires expertise and an understanding of other fields. If you have ideas on how Hi Splitter can be applied to your non-molecular data, please open an issue to discuss it.
 
 ## Citation
-Soon
+```
+@inproceedings{steshin2023hi,
+  title={Lo-Hi: Practical ML Drug Discovery Benchmark},
+  author={Steshin, Simon},
+  booktitle={Thirty-seventh Conference on Neural Information Processing Systems Datasets and Benchmarks Track},
+  year={2023}
+}
+```
