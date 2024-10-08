@@ -3,6 +3,7 @@ import numpy as np
 
 from rdkit import Chem, DataStructs
 from rdkit.Chem import AllChem
+from rdkit.Chem import rdFingerprintGenerator
 import mip
 
 
@@ -21,8 +22,10 @@ def get_neighborhood_graph(smiles, threshold):
     Returns:
         G -- neighborhood graph (nx.Graph())
     """
+    fp_generator = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=1024)
+
     mols = [Chem.MolFromSmiles(smile) for smile in smiles]
-    fps = [AllChem.GetMorganFingerprintAsBitVect(x, 2, 1024) for x in mols]
+    fps = [fp_generator.GetFingerprint(x) for x in mols]
 
     similarity_matrix = []
     for fp in fps:
