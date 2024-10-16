@@ -1,5 +1,6 @@
 from rdkit import Chem, DataStructs
 from rdkit.Chem import AllChem
+from rdkit.Chem import rdFingerprintGenerator
 import numpy as np
 from .utils import get_similar_mols
 
@@ -12,10 +13,11 @@ def select_distinct_clusters(
     """
 
     clusters = []
+    fp_generator = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=1024)
 
     while len(clusters) < max_clusters:
         mols = [Chem.MolFromSmiles(smile) for smile in smiles]
-        all_fps = [AllChem.GetMorganFingerprintAsBitVect(x, 2, 1024) for x in mols]
+        all_fps = [fp_generator.GetFingerprint(x) for x in mols]
         total_neighbours = []
         stds = []
 

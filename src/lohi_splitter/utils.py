@@ -1,5 +1,6 @@
 from rdkit import Chem, DataStructs
 from rdkit.Chem import AllChem
+from rdkit.Chem import rdFingerprintGenerator
 import numpy as np
 
 
@@ -19,15 +20,17 @@ def get_similar_mols(lhs, rhs, return_idx=False):
             (nearest_sim, nearest_idx)
             nearest_idx -- list of length of lhs. i'th element contains idx of rhs molecule, which is similar to lhs[i]
     """
+    fp_generator = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=1024)
+
     lhs_mols = []
     for smiles in lhs:
         lhs_mols.append(Chem.MolFromSmiles(smiles))
-    lhs_fps = [AllChem.GetMorganFingerprintAsBitVect(x, 2, 1024) for x in lhs_mols]
+    lhs_fps = [fp_generator.GetFingerprint(x) for x in lhs_mols]
 
     rhs_mols = []
     for smiles in rhs:
         rhs_mols.append(Chem.MolFromSmiles(smiles))
-    rhs_fps = [AllChem.GetMorganFingerprintAsBitVect(x, 2, 1024) for x in rhs_mols]
+    rhs_fps = [fp_generator.GetFingerprint(x) for x in rhs_mols]
 
     nearest_sim = []
     nearest_idx = []

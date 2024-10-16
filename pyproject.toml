@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "lohi_splitter"
-version = "1.0"
+version = "1.1"
 authors = [
   { name="Simon Steshin", email="simon.steshin@gmail.com" },
 ]
@@ -19,7 +19,7 @@ classifiers = [
 dependencies = [
     "mip==1.15.0",
     "tqdm",
-    "rdkit-pypi",
+    "rdkit-pypi>=2022.09.1",
     "networkx",
     "numpy",
 ]
