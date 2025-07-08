@@ -22,24 +22,17 @@ def get_similar_mols(lhs, rhs, return_idx=False):
     """
     fp_generator = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=1024)
 
-    lhs_mols = []
-    for smiles in lhs:
-        lhs_mols.append(Chem.MolFromSmiles(smiles))
-    lhs_fps = [fp_generator.GetFingerprint(x) for x in lhs_mols]
+    # Convert SMILES to fingerprints
+    lhs_fps = [fp_generator.GetFingerprint(Chem.MolFromSmiles(smile)) for smile in lhs]
+    rhs_fps = [fp_generator.GetFingerprint(Chem.MolFromSmiles(smile)) for smile in rhs]
 
-    rhs_mols = []
-    for smiles in rhs:
-        rhs_mols.append(Chem.MolFromSmiles(smiles))
-    rhs_fps = [fp_generator.GetFingerprint(x) for x in rhs_mols]
+    # Compute similarities in bulk
+    nearest_sim = np.zeros(len(lhs))
+    nearest_idx = np.zeros(len(lhs), dtype=int)
 
-    nearest_sim = []
-    nearest_idx = []
-    for lhs in lhs_fps:
-        sims = DataStructs.BulkTanimotoSimilarity(lhs, rhs_fps)
-        nearest_sim.append(max(sims))
-        nearest_idx.append(np.argmax(sims))
-    if return_idx:
-        result = (nearest_sim, nearest_idx)
-    else:
-        result = nearest_sim
-    return result
+    for i, lhs_fp in enumerate(lhs_fps):
+        sims = np.array(DataStructs.BulkTanimotoSimilarity(lhs_fp, rhs_fps))
+        nearest_idx[i] = sims.argmax()
+        nearest_sim[i] = sims[nearest_idx[i]]
+
+    return (nearest_sim, nearest_idx) if return_idx else nearest_sim
